@@ -3,6 +3,9 @@ class ListsController < ApplicationController
 
   def index
     @lists = List.all
+
+    @lists.each { |list| list.photos = "generic.png" if !list.photos.present?}
+
   end
 
   def new
@@ -11,6 +14,8 @@ class ListsController < ApplicationController
 
   def create
     @list = List.new(list_params)
+    @list.photos = "generic.png" if !@list.photos.present?
+
     if @list.save
       redirect_to list_path(@list)
     else
@@ -26,6 +31,7 @@ class ListsController < ApplicationController
 
   def set_list
     @list = List.find(params[:id])
+    @list.photos = "generic.png" if !@list.photos.present?
   end
 
   def list_params
